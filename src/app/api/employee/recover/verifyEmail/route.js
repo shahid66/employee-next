@@ -7,9 +7,11 @@ export async function GET(req,res){
         const prisma= new PrismaClient()
         let{searchParams}=new URL(req.url);
         let email = searchParams.get('email');
+        console.log(email)
 
-        let count=await  prisma.employee.count({where:{email:email}});
-        if(count===1){
+        let count= await  prisma.employee.count({where:{Email:email}});
+        console.log(count)
+        if(count === 1){
             let code= Math.floor(100000+Math.random()*900000)
             let EmailText= `Your OTP code is =${code}`
             let EmailSubject= "Next JS Verification Code";
@@ -17,8 +19,8 @@ export async function GET(req,res){
             await SendEmail(email,EmailText, EmailSubject);
 
             let result= await prisma.employee.update({
-                where:{email:email},
-                data:{otp:code}
+                where:{Email:email},
+                data:{OTP:code}
             })
 
             return NextResponse.json({status:"sucess", data: result})
@@ -30,6 +32,7 @@ export async function GET(req,res){
 
         
     } catch (error) {
-        return NextResponse.json({status:'falie', data: error})
+        console.log(error)
+        return NextResponse.json({status:'fail', data: error})
     }
 }

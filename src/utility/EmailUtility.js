@@ -1,25 +1,17 @@
-import nodemailer from 'nodemailer'
-
+import nodemailer from 'nodemailer';
 export async function SendEmail(EmailTo,EmailText,EmailSubject){
-    let Transport= nodemailer.createTransport({
-        host:"",
-        port:"",
+   let Transport= nodemailer.createTransport({
+        host:"mail.teamrabbil.com",
+        port:25,
         secure:false,
-        auth:{
-            user:"",
-            pass:""
-        },
-        tls:{
-            rejectUnauthorized:false
-        }
+        auth:{user:"info@teamrabbil.com", pass:"~sR4[bhaC[Qs"},
+        tls:{rejectUnauthorized:false}
     })
-
     let MailOption={
-        from:"Next JS News Portal <info@gmail.com>",
-        to:EmailTo,
-        subject:EmailSubject,
-        text:EmailText
+       from:"Next JS News Portal <info@teamrabbil.com>",
+       to:EmailTo,
+       subject:EmailSubject,
+       text:EmailText
     }
-
-    return await Transport(MailOption)
+    return await Transport.sendMail(MailOption)
 }

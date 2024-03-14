@@ -13,75 +13,75 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-
 model Employee {
-  EmployeeID    Int       @id @default(autoincrement())
-  FirstName     String
-  LastName      String
-  DateOfBirth   DateTime?
-  Gender        String?
-  Email         String
-  PhoneNumber   String
-  Address       String
-  Department    Department @relation(fields: [DepartmentID], references: [DepartmentID])
-  DepartmentID  Int
-  Branch    Branch @relation(fields: [BranchID], references: [BranchID])
-  BranchID  Int
-  Position      Position   @relation(fields: [PositionID], references: [PositionID])
-  PositionID    Int
-  attendance Attendance[]
-  leave Leave[]
-    createdAt DateTime @default(now()) @db.Timestamp(0)
-  updatedAt DateTime @default(now()) @db.Timestamp(0) @updatedAt
+  EmployeeID   Int          @id @default(autoincrement())
+  FirstName    String
+  LastName     String
+  DateOfBirth  DateTime?
+  Gender       String?
+  Email        String       @unique()
+  Password     String
+  OTP          Int          @default(0)
+  PhoneNumber  String
+  Address      String
+  Department   Department   @relation(fields: [DepartmentID], references: [DepartmentID])
+  DepartmentID Int
+  Branch       Branch       @relation(fields: [BranchID], references: [BranchID])
+  BranchID     Int
+  Position     Position     @relation(fields: [PositionID], references: [PositionID])
+  PositionID   Int
+  attendance   Attendance[]
+  leave        Leave[]
+  createdAt    DateTime     @default(now()) @db.Timestamp(0)
+  updatedAt    DateTime     @default(now()) @updatedAt @db.Timestamp(0)
 }
 
 // Define the structure of the Departments table
 model Branch {
-  BranchID    Int       @id @default(autoincrement())
-  BranchName  String
-  employees       Employee[]
+  BranchID   Int        @id @default(autoincrement())
+  BranchName String
+  employees  Employee[]
 }
+
 // Define the structure of the Departments table
 model Department {
-  DepartmentID    Int       @id @default(autoincrement())
-  DepartmentName  String
-  employees       Employee[]
+  DepartmentID   Int        @id @default(autoincrement())
+  DepartmentName String
+  employees      Employee[]
 }
 
 // Define the structure of the Positions table
 model Position {
-  PositionID    Int       @id @default(autoincrement())
-  PositionName  String
-  
-  employees     Employee[]
+  PositionID   Int    @id @default(autoincrement())
+  PositionName String
+
+  employees Employee[]
 }
 
 // Define the structure of the Attendance table
 model Attendance {
-  AttendanceID    Int       @id @default(autoincrement())
-  Employee        Employee  @relation(fields: [EmployeeID], references: [EmployeeID])
-  EmployeeID      Int
-  AttendanceDate  DateTime
-  ClockInTime     DateTime
-  ClockOutTime    DateTime?
+  AttendanceID     Int       @id @default(autoincrement())
+  Employee         Employee  @relation(fields: [EmployeeID], references: [EmployeeID])
+  EmployeeID       Int
+  AttendanceDate   DateTime
+  ClockInTime      DateTime
+  ClockOutTime     DateTime?
   AttendanceStatus String
-  
 }
 
 // Define the structure of the Leave table
 model Leave {
-  LeaveID       Int       @id @default(autoincrement())
-  Employee      Employee  @relation(fields: [EmployeeID], references: [EmployeeID])
-  EmployeeID    Int
-  LeaveDate     DateTime
-  LeaveType     String
-  LeaveStatus   String
+  LeaveID     Int      @id @default(autoincrement())
+  Employee    Employee @relation(fields: [EmployeeID], references: [EmployeeID])
+  EmployeeID  Int
+  LeaveDate   DateTime
+  LeaveType   String
+  LeaveStatus String
 }
 
 // Define the structure of the Holidays table
 model Holiday {
-  HolidayID    Int       @id @default(autoincrement())
-  HolidayDate  DateTime
-  HolidayName  String
+  HolidayID   Int      @id @default(autoincrement())
+  HolidayDate DateTime
+  HolidayName String
 }
-

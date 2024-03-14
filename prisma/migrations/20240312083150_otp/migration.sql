@@ -1,0 +1,2 @@
+-- AlterTable
+ALTER TABLE `employee` ADD COLUMN `OTP` INTEGER NOT NULL DEFAULT 0;
